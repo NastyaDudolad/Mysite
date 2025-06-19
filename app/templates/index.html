@@ -1,0 +1,356 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="about section-padding" id="section_2">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-6 col-12">
+                <img src="/static/images/couple-working-from-home-together-sofa.jpg" class="about-image img-fluid"
+                     alt="">
+            </div>
+
+            <div class="col-lg-6 col-12 mt-5 mt-lg-0">
+                <div class="about-thumb">
+
+                    <div class="section-title-wrap d-flex justify-content-end align-items-center mb-4">
+                        <h2 class="text-white me-4 mb-0">My Story</h2>
+
+                        <img src="/static/images/happy-bearded-young-man.jpg" class="avatar-image img-fluid" alt="">
+                    </div>
+
+                    <h3 class="pt-2 mb-3">a little bit about Nastya</h3>
+
+                    <p>A beginner programmer who wants to develop and improve his skills.
+                        I have been programming for 2 years. I am learning Python, HTML</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="featured section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <h3>Education</h3>
+                <p>Kharkiv computer vocational college</p>
+
+                <h3>Courses</h3>
+                <p>StartFruIT - Python, HTML, CSS; <br> IT future - Construct. </p>
+            </div>
+            <div id="right-side-img" class="col-lg-6 col-12">
+                <img src="/static/images/Image.png" width="300" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="services section-padding" id="section_3">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-10 col-12 mx-auto">
+                <div class="section-title-wrap d-flex justify-content-center align-items-center mb-5">
+                    <img src="/static/images/handshake-man-woman-after-signing-business-contract-closeup.jpg"
+                         class="avatar-image img-fluid" alt="">
+
+                    <h2 class="text-white ms-4 mb-0">Services</h2>
+                </div>
+
+                <div class="row pt-lg-5">
+                    {% for s in services %}
+                    <div class="col-lg-6 col-12">
+                        <div class="services-thumb {% if loop.index is even %}services-thumb-up{% endif %}">
+                            <div class="d-flex flex-wrap align-items-center border-bottom mb-4 pb-3">
+                                <h3 class="mb-0">{{ s.title }}</h3>
+                            </div>
+
+                            <p>{{ s.description }}</p>
+
+                            <a href="{{ s.link or '#' }}" class="custom-btn custom-border-btn btn mt-3">
+                                Discover More
+                            </a>
+
+                            <div class="services-icon-wrap d-flex justify-content-center align-items-center">
+                                {% if s.image_src %}
+                                <img src="{{ s.image_src }}" width="200" alt="">
+                                {% elif s.icon_class %}
+                                <i class="services-icon {{ s.icon_class }}"></i>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="projects section-padding" id="section_4">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-8 col-md-8 col-12 ms-auto">
+                <div class="section-title-wrap d-flex justify-content-center align-items-center mb-4">
+                    <img src="/static/images/white-desk-work-study-aesthetics.jpg" class="avatar-image img-fluid"
+                         alt="">
+
+                    <h2 class="text-white ms-4 mb-0">Projects</h2>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="projects-thumb">
+                    <div class="projects-info">
+                        <small class="projects-tag">Branding</small>
+
+                        <h3 class="projects-title">Zoik agency</h3>
+                    </div>
+
+                    <a href="/static/images/projects/nikhil-KO4io-eCAXA-unsplash.jpg" class="popup-image">
+                        <img src="/static/images/projects/nikhil-KO4io-eCAXA-unsplash.jpg"
+                             class="projects-image img-fluid" alt="">
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="projects-thumb">
+                    <div class="projects-info">
+                        <small class="projects-tag">Photography</small>
+
+                        <h3 class="projects-title">The Watch</h3>
+                    </div>
+
+                    <a href="/static/images/projects/the-5th-IQYR7N67dhM-unsplash.jpg" class="popup-image">
+                        <img src="/static/images/projects/the-5th-IQYR7N67dhM-unsplash.jpg"
+                             class="projects-image img-fluid" alt="">
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="projects-thumb">
+                    <div class="projects-info">
+                        <small class="projects-tag">Website</small>
+
+                        <h3 class="projects-title">Polo</h3>
+                    </div>
+
+                    <a href="/static/images/projects/true-agency-9Bjog5FZ-oc-unsplash.jpg" class="popup-image">
+                        <img src="/static/images/projects/true-agency-9Bjog5FZ-oc-unsplash.jpg"
+                             class="projects-image img-fluid" alt="">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="contact section-padding" id="section_5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-6 col-md-8 col-12">
+                <div class="section-title-wrap d-flex justify-content-center align-items-center mb-5">
+                    <img src="/static/images/aerial-view-man-using-computer-laptop-wooden-table.jpg"
+                         class="avatar-image img-fluid" alt="">
+
+                    <h2 class="text-white ms-4 mb-0">Say Hi</h2>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="col-lg-3 col-md-6 col-12 pe-lg-0">
+                <div class="contact-info contact-info-border-start d-flex flex-column">
+                    <strong class="site-footer-title d-block mb-3">Services</strong>
+
+                    <ul class="footer-menu">
+                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Websites</a></li>
+
+                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Construct games</a></li>
+
+                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Telegram bot</a></li>
+
+                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Python games</a></li>
+                    </ul>
+
+                    <strong class="site-footer-title d-block mt-4 mb-3">Stay connected</strong>
+
+                    <ul class="social-icon">
+                        <li class="social-icon-item"><a href="https://twitter.com/minthu"
+                                                        class="social-icon-link bi-twitter"></a></li>
+
+                        <li class="social-icon-item"><a href="#" class="social-icon-link bi-instagram"></a></li>
+
+                        <li class="social-icon-item"><a href="#" class="social-icon-link bi-pinterest"></a></li>
+
+                        <li class="social-icon-item"><a href="https://www.youtube.com/templatemo"
+                                                        class="social-icon-link bi-youtube"></a></li>
+                    </ul>
+
+                    <strong class="site-footer-title d-block mt-4 mb-3">Start a project</strong>
+
+                    <p class="mb-0">I’m available for freelance projects</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-12 ps-lg-0">
+                <div class="contact-info d-flex flex-column">
+                    <strong class="site-footer-title d-block mb-3">About</strong>
+
+                    <p class="mb-2">
+                        Nastya а beginner programmer who wants to develop and improve her skills.
+                        Feel free to get in touch with me.
+                    </p>
+
+                    <strong class="site-footer-title d-block mt-4 mb-3">Email</strong>
+
+                    <p>
+                        <a href="a.dudolad09@gmail.com">
+                            a.dudolad09@gmail.com
+                        </a>
+                    </p>
+
+                    <strong class="site-footer-title d-block mt-4 mb-3">Call</strong>
+
+                    <p class="mb-0">
+                        <a href="tel: +380679489694">
+                            +380679489694
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-12 mt-5 mt-lg-0">
+                <form id="contact_form" method="post" class="custom-form contact-form" role="form">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-floating">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Name"
+                                       required="">
+
+                                <label for="floatingInput">Name</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-floating">
+                                <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control"
+                                       placeholder="Email address" required="">
+
+                                <label for="floatingInput">Email address</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-6">
+                            <div class="form-check form-check-inline">
+                                <input name="Website" type="checkbox" class="form-check-input" id="inlineCheckbox1"
+                                       value="1">
+
+                                <label class="form-check-label" for="inlineCheckbox1">
+                                    <i class="bi-globe form-check-icon"></i>
+                                    <span class="form-check-label-text">Websites</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-6">
+                            <div class="form-check form-check-inline">
+                                <input name="Construct games" type="checkbox" class="form-check-input"
+                                       id="inlineCheckbox2" value="1">
+
+                                <label class="form-check-label" for="inlineCheckbox2">
+                                    <img src="/static/images/construct.jpg" width="35" alt="">
+                                    <span class="form-check-label-text">Construct games</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-6">
+                            <div class="form-check form-check-inline">
+                                <input name="Telegram bot" type="checkbox" class="form-check-input" id="inlineCheckbox3"
+                                       value="1">
+
+                                <label class="form-check-label" for="inlineCheckbox3">
+                                    <img src="/static/images/tgimg.jpg" width="20" alt="">
+                                    <span class="form-check-label-text">Telegram bot</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 col-6">
+                            <div class="form-check form-check-inline me-0">
+                                <input name="Python games" type="checkbox" class="form-check-input" id="inlineCheckbox4"
+                                       value="1">
+
+                                <label class="form-check-label" for="inlineCheckbox4">
+                                    <i class="bi-lightbulb form-check-icon"></i>
+                                    <span class="form-check-label-text">Python games</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" id="message" name="message"
+                                          placeholder="Tell me about the project"></textarea>
+
+                                <label for="floatingTextarea">Tell me about the project</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-12 ms-auto">
+                            <button type="submit" class="form-control">Send</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</section>
+<script>
+    document.getElementById('contact_form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        //const messageDiv = document.getElementById('message');
+
+        try {
+            const response = await fetch('/process_form', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                //messageDiv.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
+
+                console.log('Success')
+            } else {
+                //messageDiv.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;
+                console.log('Error')
+            }
+        } catch (error) {
+            //messageDiv.innerHTML = `<div class="alert alert-danger">Server error. Try again later.</div>`;
+            console.error(error);
+        }
+    });
+</script>
+
+{% endblock %}

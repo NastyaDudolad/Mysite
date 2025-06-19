@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<section>
+    <div class="container">
+        {% for a in artists %}
+        <div class="artist">
+            <h3>{{a.name}}</h3>
+            <img src={{a.image_src}}>
+        </div>
+        {% endfor %}
+    </div>
+</section>>
+{% endblock %}
