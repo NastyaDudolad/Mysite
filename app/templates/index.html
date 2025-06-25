@@ -233,8 +233,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="form-floating">
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Name"
-                                       required="">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Name">
 
                                 <label for="floatingInput">Name</label>
                             </div>
@@ -243,7 +242,7 @@
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="form-floating">
                                 <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control"
-                                       placeholder="Email address" required="">
+                                       placeholder="Email address" >
 
                                 <label for="floatingInput">Email address</label>
                             </div>
@@ -318,39 +317,14 @@
     </div>
     </div>
 </section>
-<script>
-    document.getElementById('contact_form').addEventListener('submit', async function (e) {
-        e.preventDefault();
 
-        const form = e.target;
-        const formData = new FormData(form);
-
-        //const messageDiv = document.getElementById('message');
-
-        try {
-            const response = await fetch('/process_form', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json'
-                },
-                body: formData
-            });
-
-            const result = await response.json();
-
-            if (response.ok && result.success) {
-                //messageDiv.innerHTML = `<div class="alert alert-success">${result.message}</div>`;
-
-                console.log('Success')
-            } else {
-                //messageDiv.innerHTML = `<div class="alert alert-danger">${result.message}</div>`;
-                console.log('Error')
-            }
-        } catch (error) {
-            //messageDiv.innerHTML = `<div class="alert alert-danger">Server error. Try again later.</div>`;
-            console.error(error);
-        }
-    });
-</script>
+<div id="popup-message" class="popup-message">
+    <div class="popup-content">
+        <span id="popup-close" class="popup-close">&times;</span>
+        <p id="popup-text"></p>
+    </div>
+</div>
+<link rel="stylesheet" href="/static/css/custom.css">
+<script src="/static/js/send_form.js"></script>
 
 {% endblock %}

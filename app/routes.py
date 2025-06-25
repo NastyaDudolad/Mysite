@@ -21,17 +21,28 @@ def init_routes(app):
         services = Service.query.all()
         return render_template('index.html', services=services)
 
-    @app.route('/proccess_form', methods=['POST'])
+    @app.route('/process_form', methods=['GET', 'POST'])
     def proccess_form():
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
+        name = request.form.get('name')
+        email = request.form.get('email')
+        message = request.form.get('message')
+
+        error_msg = ''
+        success = True
+
+        if name == '' or message == '':
+            message = 'name or message cannot be empty'
+            success = False
+        else:
+            message = 'We will connect you soon'
+
         data = {
-            'name': name,
-            'name': name,
-            'name': name,
+            'success': success,
+            'message': message,
+            'error': error_msg
         }
-        return json.dump(data)
+
+        return json.dumps(data)
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
