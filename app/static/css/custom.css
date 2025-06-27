@@ -3,7 +3,7 @@ body{
     color: #3d3c3c;
     font-size: 16px;
 }
-.btn{
+/*.btn{
     width: 96px;
     background: #e5e5e5;
     border-radius: 5px;
@@ -14,7 +14,7 @@ body{
 }
 .btn:hover {
     background: #ede6e6;
-}
+}*/
 #right-side-img {
     text-align: center;
 }
@@ -56,4 +56,10 @@ body{
     font-size: 24px;
     color: #333;
     cursor: pointer;
+}
+
+/* Стиль для ошибки */
+.popup-error .popup-content {
+    background-color: #ea0707; /* ярко-красный */
+    color: #3b1f0d; /* темно-коричневый */
 }
