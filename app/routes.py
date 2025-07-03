@@ -1,9 +1,21 @@
 from flask import render_template, request
+import config
 from config import *
 import hashlib
 from app.models import Artist
 from app.models import Service
 import json
+import requests
+
+# tg_bot
+url = f'https://api.telegram.org/bot{config.TOKEN}/'
+def send_message(chat_id, text):
+    response = requests.get((url + f'sendMessage?chat_id={config.CHAT_ID}&text={text}'))
+    return response.json()
+def get_chat_id(update):
+    return update['message']['chat']['id']
+def send_request_msg(update, msg_to_send):
+    send_message(get_chat_id(update), msg_to_send)
 
 
 def init_routes(app):
@@ -26,19 +38,44 @@ def init_routes(app):
         name = request.form.get('name')
         email = request.form.get('email')
         message = request.form.get('message')
-
+        tg_bot = request.form.get('Telegram bot')
+        python_games = request.form.get('Python games')
+        website = request.form.get('Website')
+        construct_games = request.form.get('Construct games')
         error_msg = ''
         success = True
 
         if name == '' or message == '':
-            message = 'name or message cannot be empty'
+            operation_message = 'Name or message cannot be empty'
             success = False
         else:
-            message = 'We will connect you soon'
+            selected_options = ''
+            joint = ' | '
+
+            if tg_bot == '1':
+                selected_options += 'tg_bot'
+            if website == '1':
+                if selected_options != '':
+                    selected_options += joint
+                selected_options += 'website'
+            if construct_games == '1':
+                if selected_options != '':
+                    selected_options += joint
+                selected_options += 'construct_games'
+            if python_games == '1':
+                if selected_options != '':
+                    selected_options += joint
+                selected_options += 'python_games'
+
+            send_string = f'Someone made a request. Name: {name}, email: {email}, selected options: {selected_options}, '\
+                f'message: {message}'
+            send_message(config.my_chat_id, send_string)
+
+            operation_message = 'We will connect you soon'
 
         data = {
             'success': success,
-            'message': message,
+            'message': operation_message,
             'error': error_msg
         }
 
