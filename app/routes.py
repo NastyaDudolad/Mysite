@@ -4,16 +4,24 @@ from config import *
 import hashlib
 from app.models import Artist
 from app.models import Service
+from app.models import FormMessage
+from app import db
 import json
 import requests
 
 # tg_bot
 url = f'https://api.telegram.org/bot{config.TOKEN}/'
+
+
 def send_message(chat_id, text):
     response = requests.get((url + f'sendMessage?chat_id={config.CHAT_ID}&text={text}'))
     return response.json()
+
+
 def get_chat_id(update):
     return update['message']['chat']['id']
+
+
 def send_request_msg(update, msg_to_send):
     send_message(get_chat_id(update), msg_to_send)
 
@@ -33,6 +41,12 @@ def init_routes(app):
         services = Service.query.all()
         return render_template('index.html', services=services)
 
+    def append_option(selected, option):
+        if selected:
+            selected += ' | '
+        selected += option
+        return selected
+
     @app.route('/process_form', methods=['GET', 'POST'])
     def proccess_form():
         name = request.form.get('name')
@@ -50,27 +64,23 @@ def init_routes(app):
             success = False
         else:
             selected_options = ''
-            joint = ' | '
 
             if tg_bot == '1':
-                selected_options += 'tg_bot'
+                selected_options = append_option(selected_options, 'tg_bot')
             if website == '1':
-                if selected_options != '':
-                    selected_options += joint
-                selected_options += 'website'
+                selected_options = append_option(selected_options, 'website')
             if construct_games == '1':
-                if selected_options != '':
-                    selected_options += joint
-                selected_options += 'construct_games'
+                selected_options = append_option(selected_options, 'construct_games')
             if python_games == '1':
-                if selected_options != '':
-                    selected_options += joint
-                selected_options += 'python_games'
+                selected_options = append_option(selected_options, 'python_games')
 
-            send_string = f'Someone made a request. Name: {name}, email: {email}, selected options: {selected_options}, '\
-                f'message: {message}'
-            send_message(config.my_chat_id, send_string)
+            send_string = f'Someone made a request. Name: {name}, email: {email}, selected options: {selected_options}, ' \
+                          f'message: {message}'
+            send_message(config.CHAT_ID, send_string)
 
+            new_msg = FormMessage(name=name, email=email, selected_option=selected_options, message=message)
+            db.session.add(new_msg)
+            db.session.commit()
             operation_message = 'We will connect you soon'
 
         data = {
