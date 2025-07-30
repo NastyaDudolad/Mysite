@@ -1,0 +1,12 @@
+h1 {
+    font-size: revert;
+}
+
+#messages table {
+    margin: 0 auto;
+}
+
+#messages td, #messages th {
+    border: 1px solid black;
+    padding: 10px;
+}

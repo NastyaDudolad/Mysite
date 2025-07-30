@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 import config
 from config import *
 import hashlib
@@ -38,8 +38,11 @@ def init_routes(app):
 
     @app.route('/')
     def home():
+        import datetime
+        year = datetime.datetime.now()
+        year = year.strftime("%Y")
         services = Service.query.all()
-        return render_template('index.html', services=services)
+        return render_template('index.html', services=services, current_year=year)
 
     def append_option(selected, option):
         if selected:
@@ -98,7 +101,42 @@ def init_routes(app):
             password = request.form['password']
             # перевірка логіну та паролю
             if username == LOGIN and hashlib.md5(password.encode()).hexdigest() == PASSWORD_HASH:
-                return render_template('dashboard.html')
+                return redirect(url_for('admin'))
             else:
                 return render_template('not_logged.html')
+
+        # GET
         return render_template('login.html')
+
+
+    @app.route('/admin', methods=['GET', 'POST'])
+    def admin():
+        messages = FormMessage.query.all()
+        return render_template('dashboard.html', messages=messages)
+
+    @app.route('/form_messages/<int:id>', methods=['DELETE'])
+    def delete_form_message(id):
+        error_msg = ''
+        operation_message = ''
+
+        message_to_delete = db.session.query(FormMessage).get(id)
+
+        if message_to_delete is None:
+            error_msg = 'No record'
+            success = False
+        else:
+            db.session.delete(message_to_delete)
+            db.session.commit()
+            success = True
+            operation_message = 'Record was deleted succefully'
+
+        data = {
+            'success': success,
+            'message': operation_message,
+            'error': error_msg
+        }
+
+        return json.dumps(data)
+
+
+

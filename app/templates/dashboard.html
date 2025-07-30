@@ -1,13 +1,47 @@
-{% extends 'base.html' %}
+{% extends 'admin_layout.html' %}
 
 {% block content %}
-<style>
 
-</style>
-<p style="font-size:20px; text-align:center">Вы вошли в систему!<br></p>
 <div style="text-align:center">
-  <div class="btn"><a href="/login">Вернуться назад</a></div>
-  <div class="btn"><a href="/">Вернуться домой</a></div>
+    <div class="btn"><a href="/login">Вернуться назад</a></div>
+    <div class="btn"><a href="/">Вернуться домой</a></div>
 </div>
 
+<div id="messages">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Options</th>
+            <th></th>
+        </tr>
+        <tr>
+            {% for m in messages %}
+        <tr>
+            <td>{{ m.id }}</td>
+            <td>{{ m.name }}</td>
+            <td>{{ m.email }}</td>
+            <td>{{ m.message }}</td>
+            <td>{{ m.selected_option }}</td>
+            <td><a href="javascript:void(0)" onclick="process({{ m.id }})">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<script>
+    function process(id) {
+      console.log(id)
+      fetch('/form_messages/' + id,
+        {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json'
+          },
+        }
+      )
+    }
+</script>
 {% endblock %}

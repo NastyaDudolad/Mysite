@@ -6,6 +6,3 @@ class FormMessage(db.Model):
     email = db.Column(db.String(100), nullable=True)
     selected_option = db.Column(db.String(255), nullable=True)
     message = db.Column(db.Text, nullable=True)
-
-
-
