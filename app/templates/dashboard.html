@@ -7,6 +7,7 @@
     <div class="btn"><a href="/">Вернуться домой</a></div>
 </div>
 
+{% if messages %}
 <div id="messages">
     <table>
         <tr>
@@ -30,18 +31,39 @@
         {% endfor %}
     </table>
 </div>
+{% endif %}
 
 <script>
     function process(id) {
-      console.log(id)
-      fetch('/form_messages/' + id,
-        {
-          method: 'DELETE',
-          headers: {
-            'Accept': 'application/json'
-          },
-        }
-      )
-    }
+  console.log(id)
+  fetch('/form_messages/' + id, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Успішна відповідь (статус 200–299)
+        return response.json(); // Якщо сервер повертає JSON
+      } else {
+        // Неуспішна відповідь (наприклад, 404, 500 і т.п.)
+        throw new Error(`Помилка сервера: ${response.status}`);
+      }
+    })
+    .then(data => {
+      // Тут вже приходять розпарсені дані (якщо все успішно)
+      console.log('Успіх:', data);
+
+      if (data.success) {
+        window.location.reload();
+      }
+    })
+    .catch(error => {
+      // Тут обробляються всі помилки: мережеві або з блоку throw
+      console.error('Сталася помилка:', error);
+      alert('Не вдалося видалити повідомлення.');
+    });
+}
 </script>
 {% endblock %}
