@@ -1,22 +1,25 @@
-from flask import request
+from flask import request, current_app
 from . import api_bp
 from app.models import FormMessage
 import json
-from config import *
 from app import db
 import requests
 
-# tg_bot
-url = f'https://api.telegram.org/bot{TOKEN}/'
-def send_message(chat_id, text):
-    response = requests.get((url + f'sendMessage?chat_id={CHAT_ID}&text={text}'))
+
+def send_message(text):
+    token = current_app.config['TOKEN']
+    chat_id = current_app.config['CHAT_ID']
+    url = f'https://api.telegram.org/bot{token}/'
+    response = requests.get((url + f'sendMessage?chat_id={chat_id}&text={text}'))
     return response.json()
+
 
 def append_option(selected, option):
     if selected:
         selected += ' | '
     selected += option
     return selected
+
 
 @api_bp.route('/process_form', methods=['GET', 'POST'])
 def proccess_form():
@@ -47,7 +50,7 @@ def proccess_form():
 
         send_string = f'Someone made a request. Name: {name}, email: {email}, selected options: {selected_options}, ' \
                       f'message: {message}'
-        send_message(CHAT_ID, send_string)
+        send_message(send_string)
 
         new_msg = FormMessage(name=name, email=email, selected_option=selected_options, message=message)
         db.session.add(new_msg)
@@ -61,6 +64,7 @@ def proccess_form():
     }
 
     return json.dumps(data)
+
 
 @api_bp.route('/form_messages/<int:id>', methods=['DELETE'])
 def delete_form_message(id):

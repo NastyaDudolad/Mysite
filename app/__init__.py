@@ -2,9 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-
 db = SQLAlchemy()
-
 
 def create_app():
     app = Flask(__name__)
@@ -15,7 +13,6 @@ def create_app():
     app.config['TOKEN'] = os.getenv('TOKEN')
     app.config['CHAT_ID'] = os.getenv('CHAT_ID')
     app.config['HOST'] = os.getenv('HOST', 'http://localhost')
-
 
     db.init_app(app)
 

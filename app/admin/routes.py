@@ -1,10 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import render_template, request, redirect, current_app
 from . import admin_bp
 from app.models import FormMessage
 import hashlib
-from config import *
 
-url_for
 
 @admin_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -12,8 +10,10 @@ def login():
         username = request.form['username']
         password = request.form['password']
         # перевірка логіну та паролю
-        if username == LOGIN and hashlib.md5(password.encode()).hexdigest() == PASSWORD_HASH:
-            return redirect(f'{HOST}/admin')
+        if (username == current_app.config['LOGIN']
+                and hashlib.md5(password.encode()).hexdigest() == current_app.config['PASSWORD_HASH']):
+            host = current_app.config['HOST']
+            return redirect(f'{host}/admin')
         else:
             return render_template('not_logged.html')
 
