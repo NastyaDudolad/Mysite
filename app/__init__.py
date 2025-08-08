@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 
 db = SQLAlchemy()
@@ -7,8 +8,14 @@ db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///base.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['LOGIN'] = os.getenv('LOGIN', 'admin')
+    app.config['PASSWORD_HASH'] = os.getenv('PASSWORD_HASH', '21232f297a57a5a743894a0e4a801fc3')
+    app.config['TOKEN'] = os.getenv('TOKEN')
+    app.config['CHAT_ID'] = os.getenv('CHAT_ID')
+    app.config['HOST'] = os.getenv('HOST', 'http://localhost')
+
 
     db.init_app(app)
 
