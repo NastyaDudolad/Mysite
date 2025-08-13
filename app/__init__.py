@@ -12,7 +12,7 @@ def create_app():
     app.config['PASSWORD_HASH'] = os.getenv('PASSWORD_HASH', '21232f297a57a5a743894a0e4a801fc3')
     app.config['TOKEN'] = os.getenv('TOKEN')
     app.config['CHAT_ID'] = os.getenv('CHAT_ID')
-    app.config['HOST'] = os.getenv('HOST', 'http://localhost')
+    app.config['HOST'] = os.getenv('HOST', 'https://mysite-2-zzw9.onrender.com')
 
     db.init_app(app)
 
