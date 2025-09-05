@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, current_app, session
+from flask import render_template, request, redirect, current_app, session, url_for
 from . import admin_bp
 from app.models import FormMessage
 import hashlib
@@ -12,6 +12,7 @@ def login():
         # перевірка логіну та паролю
         if (username == current_app.config['LOGIN'] and password == 'admin'):
             session['user'] = username
+            return redirect(url_for('admin.admin'))
         else:
             return render_template('not_logged.html')
 
@@ -23,7 +24,7 @@ def login():
 def admin():
     messages = FormMessage.query.all()
 
-    if 'user' in session:
-        return render_template('dashboard.html', messages=messages)
+    if 'user' not in session:
+        return redirect(url_for('admin.login'))
 
-    return render_template('login.html')
+    return render_template('dashboard.html', messages=messages)
