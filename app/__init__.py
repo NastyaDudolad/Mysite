@@ -6,7 +6,8 @@ db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///base.db')
+    #app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///base.db')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:Nastya07102009@localhost:5432/test2'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['LOGIN'] = os.getenv('LOGIN', 'admin')
     app.config['PASSWORD_HASH'] = os.getenv('PASSWORD_HASH', '21232f297a57a5a743894a0e4a801fc3')

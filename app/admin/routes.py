@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, current_app
+from flask import render_template, request, redirect, current_app, session
 from . import admin_bp
 from app.models import FormMessage
 import hashlib
@@ -10,10 +10,8 @@ def login():
         username = request.form['username']
         password = request.form['password']
         # перевірка логіну та паролю
-        if (username == current_app.config['LOGIN']
-                and hashlib.md5(password.encode()).hexdigest() == current_app.config['PASSWORD_HASH']):
-            host = current_app.config['HOST']
-            return redirect(f'{host}/admin')
+        if (username == current_app.config['LOGIN'] and password == 'admin'):
+            session['user'] = username
         else:
             return render_template('not_logged.html')
 
@@ -24,4 +22,8 @@ def login():
 @admin_bp.route('/admin', methods=['GET', 'POST'])
 def admin():
     messages = FormMessage.query.all()
-    return render_template('dashboard.html', messages=messages)
+
+    if 'user' in session:
+        return render_template('dashboard.html', messages=messages)
+
+    return render_template('login.html')
