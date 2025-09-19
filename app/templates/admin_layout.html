@@ -26,6 +26,19 @@
             </div>
         </section>
 
+        <header style="display: flex; justify-content: space-between; align-items: center;">
+    <div class="logo-block" style="display: flex; align-items: center; gap: 10px;">
+        <img src="static/images/Nastya Dudolad.png" alt="Logo" style="height: 60px">
+        <div class="logo-text">FIRST</div>
+    </div>
+
+    {% if username and role %}
+    <div class="user-block" style="text-align: right; padding-right: 15px">
+        <div class="username">Пользователь: {{ username }}</div>
+        <div class="role"> Роль: {{ role }}</div>
+    </div>
+    {% endif %}
+        </header>
         <main>
             <div class="container">
                  <!-- контент дочерних шаблонов -->
